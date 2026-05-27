@@ -6,6 +6,7 @@ import org.testng.annotations.Test;
 
 import com.constants.Browser;
 import com.ui.pages.HomePage;
+import com.ui.pojo.User;
 
 public class LoginTest {
 	private HomePage homePage;
@@ -16,9 +17,10 @@ public class LoginTest {
 	}
 
 	@Test(description = "Verifies if the valid user is able to login into the application", groups = { "sanity",
-			"smoke", "regression" })
-	public void loginTest() {
-		Assert.assertEquals(homePage.goToLoginPage().doLoginWith("kawohip932@gzeos.com", "Pwd@123").getUserName(),
+			"smoke", "regression" }, dataProviderClass = com.ui.dataproviders.LoginDataProvider.class, 
+			dataProvider = "LoginDataProvider")
+	public void loginTest(User user) {
+		Assert.assertEquals(homePage.goToLoginPage().doLoginWith(user.getEmailAddress(), user.getPassword()).getUserName(),
 				"Chetan AG");
 	}
 
