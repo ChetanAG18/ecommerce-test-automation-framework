@@ -3,8 +3,12 @@ package com.ui.pages;
 import org.openqa.selenium.By;
 
 import com.constants.Browser;
+import com.constants.Env;
+
 import static com.constants.Env.*;
 import com.utility.BrowserUtility;
+import com.utility.JSONUtility;
+
 import static com.utility.PropertiesUtil.*;
 
 public final class HomePage extends BrowserUtility {
@@ -13,7 +17,8 @@ public final class HomePage extends BrowserUtility {
 
 	public HomePage(Browser browserName) {
 		super(browserName);
-		goToWebsite(getProperty(QA, "URL"));
+		//goToWebsite(getProperty(QA, "URL"));
+		goToWebsite(JSONUtility.readJson(QA));
 		maximizeWindow();
 	}
 
