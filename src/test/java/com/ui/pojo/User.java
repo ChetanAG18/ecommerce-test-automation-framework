@@ -1,8 +1,15 @@
 package com.ui.pojo;
 
 public class User {
+
 	private String emailAddress;
 	private String password;
+
+	public User(String emailAddress, String password) {
+		super();
+		this.emailAddress = emailAddress;
+		this.password = password;
+	}
 
 	public String getEmailAddress() {
 		return emailAddress;
@@ -10,6 +17,11 @@ public class User {
 
 	public String getPassword() {
 		return password;
+	}
+
+	@Override
+	public String toString() {
+		return "User [emailAddress=" + emailAddress + ", password=" + password + "]";
 	}
 
 }

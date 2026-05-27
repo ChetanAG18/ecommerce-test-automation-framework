@@ -12,6 +12,7 @@ import org.testng.annotations.DataProvider;
 import com.google.gson.Gson;
 import com.ui.pojo.TestData;
 import com.ui.pojo.User;
+import com.utility.CSVReaderUtility;
 
 public class LoginDataProvider {
 	
@@ -33,5 +34,10 @@ public class LoginDataProvider {
 		}
 		
 		return dataToReturn.iterator();
+	}
+	
+	@DataProvider(name = "LoginTestCSVDataProvider", parallel = true)
+	public Iterator<User> loginCSVDataProvider() {
+		return CSVReaderUtility.readCSVFile("loginData.csv");
 	}
 }
