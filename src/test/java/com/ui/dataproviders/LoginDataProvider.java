@@ -13,31 +13,37 @@ import com.google.gson.Gson;
 import com.ui.pojo.TestData;
 import com.ui.pojo.User;
 import com.utility.CSVReaderUtility;
+import com.utility.ExcelReaderUtility;
 
 public class LoginDataProvider {
-	
+
 	@DataProvider(name = "LoginDataProvider", parallel = true)
 	public Iterator<Object[]> loginDataProvider() {
-		Gson gson = new Gson();		
+		Gson gson = new Gson();
 		File file = new File(System.getProperty("user.dir") + "/testData/logindata.json");
 		FileReader fr = null;
 		try {
 			fr = new FileReader(file);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		}		
+		}
 		TestData testdata = gson.fromJson(fr, TestData.class);
-		
+
 		List<Object[]> dataToReturn = new ArrayList<Object[]>();
 		for (User user : testdata.getData()) {
-			dataToReturn.add(new Object [] {user});
+			dataToReturn.add(new Object[] { user });
 		}
-		
+
 		return dataToReturn.iterator();
 	}
-	
+
 	@DataProvider(name = "LoginTestCSVDataProvider", parallel = true)
 	public Iterator<User> loginCSVDataProvider() {
 		return CSVReaderUtility.readCSVFile("loginData.csv");
+	}
+
+	@DataProvider(name = "LoginTestEXCELDataProvider", parallel = true)
+	public Iterator<User> loginEXCELDataProvider() {
+		return ExcelReaderUtility.readExcelFile("loginData.xlsx");
 	}
 }

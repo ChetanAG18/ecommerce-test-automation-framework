@@ -31,5 +31,13 @@ public class LoginTest {
 		Assert.assertEquals(homePage.goToLoginPage().doLoginWith(user.getEmailAddress(), user.getPassword()).getUserName(),
 				"Chetan AG");
 	}
+	
+	@Test(description = "Verifies if the valid user is able to login into the application", groups = { "sanity",
+			"smoke", "regression" }, dataProviderClass = com.ui.dataproviders.LoginDataProvider.class, 
+			dataProvider = "LoginTestEXCELDataProvider")
+	public void loginEXCELTest(User user) {
+		Assert.assertEquals(homePage.goToLoginPage().doLoginWith(user.getEmailAddress(), user.getPassword()).getUserName(),
+				"Chetan AG");
+	}
 
 }
