@@ -1,5 +1,6 @@
 package com.ui.pages;
 
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 
 import com.constants.Browser;
@@ -8,11 +9,13 @@ import com.constants.Env;
 import static com.constants.Env.*;
 import com.utility.BrowserUtility;
 import com.utility.JSONUtility;
+import com.utility.LoggerUtility;
 
 import static com.utility.PropertiesUtil.*;
 
 public final class HomePage extends BrowserUtility {
-
+	
+	Logger logger = LoggerUtility.getLogger(BrowserUtility.class);
 	private static final By SIGN_IN_LINK_LOCATOR = By.xpath("//a[contains(text(), 'Sign in')]");
 
 	public HomePage(Browser browserName) {
@@ -23,6 +26,7 @@ public final class HomePage extends BrowserUtility {
 	}
 
 	public LoginPage goToLoginPage() {
+		logger.info("Trying to click sign in link to go to login page");
 		clickOn(SIGN_IN_LINK_LOCATOR);
 		LoginPage loginPage = new LoginPage(getDriver());
 		return loginPage;

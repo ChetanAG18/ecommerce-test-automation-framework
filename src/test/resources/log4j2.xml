@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuraton>
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<patternLayout pattern="%d{dd-MM-YYYY HH:mm:ss} [%t] %highlight{%5p} %c{1}::%M():%L %msg %n"> </patternLayout>
+		</Console>
+		
+		<File name="File Appender" fileName="logs/automation.log" append="false">
+			<patternLayout pattern="%d{dd-MM-YYYY HH:mm:ss} [%t] %highlight{%5p} %c{1}::%M():%L %m%n"> </patternLayout>
+		</File>
+	</Appenders>
+	
+	<Loggers>
+		<Root level="info">
+			<AppenderRef ref="Console"></AppenderRef>
+			<AppenderRef ref="File Appender"></AppenderRef>
+		</Root>
+	</Loggers>
+
+</Configuraton>
