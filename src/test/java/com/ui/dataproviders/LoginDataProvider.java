@@ -17,7 +17,7 @@ import com.utility.ExcelReaderUtility;
 
 public class LoginDataProvider {
 
-	@DataProvider(name = "LoginDataProvider", parallel = true)
+	@DataProvider(name = "LoginDataProvider", parallel=true)
 	public Iterator<Object[]> loginDataProvider() {
 		Gson gson = new Gson();
 		File file = new File(System.getProperty("user.dir") + "/testData/logindata.json");
@@ -37,12 +37,12 @@ public class LoginDataProvider {
 		return dataToReturn.iterator();
 	}
 
-	@DataProvider(name = "LoginTestCSVDataProvider", parallel = true)
+	@DataProvider(name = "LoginTestCSVDataProvider", parallel=true)
 	public Iterator<User> loginCSVDataProvider() {
 		return CSVReaderUtility.readCSVFile("loginData.csv");
 	}
 
-	@DataProvider(name = "LoginTestEXCELDataProvider", parallel = true)
+	@DataProvider(name = "LoginTestEXCELDataProvider", parallel=true)
 	public Iterator<User> loginEXCELDataProvider() {
 		return ExcelReaderUtility.readExcelFile("loginData.xlsx");
 	}
