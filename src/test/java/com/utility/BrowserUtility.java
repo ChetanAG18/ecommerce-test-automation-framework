@@ -1,7 +1,15 @@
 package com.utility;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -13,30 +21,30 @@ import com.ui.tests.LoginTest;
 
 public abstract class BrowserUtility {
 
-	private WebDriver driver;
+	private static ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
 	Logger logger = LoggerUtility.getLogger(BrowserUtility.class);
 
 	public WebDriver getDriver() {
-		return driver;
+		return driver.get();
 	}
 
 	public BrowserUtility(WebDriver driver) {
 		super();
-		this.driver = driver;
+		this.driver.set(driver);
 	}
 	
 	public BrowserUtility(String browserName) {
 		logger.info("Launching the browser for", browserName);
 		if(browserName.equalsIgnoreCase("chrome")) {
-			driver = new ChromeDriver();
+			driver.set(new ChromeDriver());
 		} 
 		
 		else if(browserName.equalsIgnoreCase("edge")) {
-			driver = new EdgeDriver();
+			driver.set(new EdgeDriver());
 		}
 		
 		else if(browserName.equalsIgnoreCase("firefox")) {
-			driver = new FirefoxDriver();
+			driver.set(new FirefoxDriver());
 		}
 		
 		else {
@@ -47,15 +55,15 @@ public abstract class BrowserUtility {
 	public BrowserUtility(Browser browserName) {
 		logger.info("Launching the browser for {}", browserName);
 		if(browserName == Browser.CHROME) {
-			driver = new ChromeDriver();
+			driver.set(new ChromeDriver());
 		} 
 		
 		else if(browserName == Browser.EDGE) {
-			driver = new EdgeDriver();
+			driver.set(new EdgeDriver());
 		}
 		
 		else if(browserName == Browser.FIREFOX) {
-			driver = new FirefoxDriver();
+			driver.set( new FirefoxDriver());
 		}
 		
 		else {
@@ -65,33 +73,51 @@ public abstract class BrowserUtility {
 
 	public void goToWebsite(String url) {
 		logger.info("Visiting the url: {}", url);
-		driver.get(url);
+		driver.get().get(url);
 	}
 
 	public void maximizeWindow() {
 		logger.info("Maximize the window");
-		driver.manage().window().maximize();
+		driver.get().manage().window().maximize();
 	}
 
 	public void clickOn(By locator) {
 		logger.info("Finding the locator {}", locator);
-		WebElement element = driver.findElement(locator);
+		WebElement element = driver.get().findElement(locator);
 		logger.info("Locator found now performing the click");
 		element.click();
 	}
 
 	public void enterText(By locator, String textToEnter) {
 		logger.info("Finding the locator {}", locator);
-		WebElement element = driver.findElement(locator);
+		WebElement element = driver.get().findElement(locator);
 		logger.info("Locator found now enter the text {}", textToEnter);
 		element.sendKeys(textToEnter);
 	}
 	
 	public String getVisibleText(By locator) {
 		logger.info("Finding the locator {}", locator);
-		WebElement element = driver.findElement(locator);
+		WebElement element = driver.get().findElement(locator);
 		logger.info("Locator found now get the visible text {}", element.getText());
 		return element.getText();
+	}
+	
+	public String takeScreenshot(String name) {
+		TakesScreenshot screenshot = (TakesScreenshot) driver.get();
+		Date date = new Date();
+		SimpleDateFormat dateFormater = new SimpleDateFormat("HH-mm-ss");
+		String timeStamp = dateFormater.format(date);
+		File screenshotData = screenshot.getScreenshotAs(OutputType.FILE);
+		String path = System.getProperty("user.dir") + "//screenshots//" + name+" - "+timeStamp+".png";
+		File screenshotFile = new File(path);
+
+		try {
+			FileUtils.copyFile(screenshotData, screenshotFile);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return path;
 	}
 
 }

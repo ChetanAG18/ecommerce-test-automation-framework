@@ -13,17 +13,11 @@ import com.ui.pojo.User;
 import com.utility.LoggerUtility;
 
 @Listeners(com.ui.listener.TestListener.class)
-public class LoginTest {
-	private HomePage homePage;
-	//private static final Logger LOGGER = LogManager.getLogger(LoginTest.class);
-	Logger logger = LoggerUtility.getLogger(LoginTest.class);
+public class LoginTest extends TestBase {
 	
-	@BeforeMethod(description = "Load the homepage of the website")
-	public void setUp() {
-		logger.info("Loading the home page of the website");
-		homePage = new HomePage(Browser.CHROME);
-	}
-
+	//private static final Logger LOGGER = LogManager.getLogger(LoginTest.class);
+	Logger logger = LoggerUtility.getLogger(LoginTest.class);	
+	
 	@Test(description = "Verifies if the valid user is able to login into the application", groups = { "sanity",
 			"smoke", "regression" }, dataProviderClass = com.ui.dataproviders.LoginDataProvider.class, 
 			dataProvider = "LoginDataProvider")
@@ -48,7 +42,7 @@ public class LoginTest {
 			retryAnalyzer = com.ui.listener.MyRetryAnalyzer.class)
 	public void loginEXCELTest(User user) {
 		Assert.assertEquals(homePage.goToLoginPage().doLoginWith(user.getEmailAddress(), user.getPassword()).getUserName(),
-				"Chetan AG1");
+				"Chetan AG");
 	}
 
 }
