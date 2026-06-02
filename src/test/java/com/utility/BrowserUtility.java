@@ -13,8 +13,11 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 
 import com.constants.Browser;
 import com.ui.tests.LoginTest;
@@ -64,6 +67,47 @@ public abstract class BrowserUtility {
 		
 		else if(browserName == Browser.FIREFOX) {
 			driver.set( new FirefoxDriver());
+		}
+		
+		else {
+			logger.error("{} is Invalid Browser Name.... Please Select chrome or edge or firefox", browserName);
+		}
+	}
+	
+	public BrowserUtility(Browser browserName, boolean isHeadless) {
+		logger.info("Launching the browser for {}", browserName);
+		if (browserName == Browser.CHROME) {
+			if (isHeadless) {
+				ChromeOptions options = new ChromeOptions();
+				options.addArguments("--headless=old");
+				options.addArguments("--window-size=1920,1080");
+				driver.set(new ChromeDriver(options));
+			} else {
+				driver.set(new ChromeDriver());
+			}
+
+		}
+		
+		else if (browserName == Browser.EDGE) {
+			if (isHeadless) {
+				EdgeOptions options = new EdgeOptions();
+				options.addArguments("--headless=old");
+				options.addArguments("disable-gpu");
+				driver.set(new EdgeDriver(options));
+			} else {
+				driver.set(new EdgeDriver());
+			}
+		}
+		
+		else if (browserName == Browser.FIREFOX) {
+			driver.set(new FirefoxDriver());
+			if (isHeadless) {
+				FirefoxOptions options = new FirefoxOptions();
+				options.addArguments("--headless=old");
+				driver.set(new FirefoxDriver(options));
+			} else {
+				driver.set(new FirefoxDriver());
+			}
 		}
 		
 		else {

@@ -26,6 +26,9 @@ public class TestListener implements ITestListener {
 	}
 
 	public void onTestSuccess(ITestResult result) {
+		long startTime = result.getStartMillis();
+		long endTime = result.getEndMillis();
+		logger.info("Test Duration: {}", (endTime-startTime));
 		logger.info("{} Test Passed", result.getName());
 		ExtentReporterUtility.getExtentTest().log(Status.PASS, result.getName() +" "+ "PASSED");
 	}
