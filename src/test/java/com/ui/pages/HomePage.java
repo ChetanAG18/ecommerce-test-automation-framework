@@ -2,6 +2,7 @@ package com.ui.pages;
 
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 
 import com.constants.Browser;
 import com.constants.Env;
@@ -20,6 +21,13 @@ public final class HomePage extends BrowserUtility {
 
 	public HomePage(Browser browserName, boolean isHeadless) {
 		super(browserName, isHeadless);
+		//goToWebsite(getProperty(QA, "URL"));
+		goToWebsite(JSONUtility.readJson(QA).getUrl());
+		maximizeWindow();
+	}
+
+	public HomePage(WebDriver driver) {
+		super(driver);
 		//goToWebsite(getProperty(QA, "URL"));
 		goToWebsite(JSONUtility.readJson(QA).getUrl());
 		maximizeWindow();

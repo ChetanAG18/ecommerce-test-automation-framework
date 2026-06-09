@@ -20,7 +20,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
 import com.constants.Browser;
-import com.ui.tests.LoginTest;
 
 public abstract class BrowserUtility {
 
@@ -35,45 +34,45 @@ public abstract class BrowserUtility {
 		super();
 		this.driver.set(driver);
 	}
-	
+
 	public BrowserUtility(String browserName) {
 		logger.info("Launching the browser for", browserName);
-		if(browserName.equalsIgnoreCase("chrome")) {
+		if (browserName.equalsIgnoreCase("chrome")) {
 			driver.set(new ChromeDriver());
-		} 
-		
-		else if(browserName.equalsIgnoreCase("edge")) {
+		}
+
+		else if (browserName.equalsIgnoreCase("edge")) {
 			driver.set(new EdgeDriver());
 		}
-		
-		else if(browserName.equalsIgnoreCase("firefox")) {
+
+		else if (browserName.equalsIgnoreCase("firefox")) {
 			driver.set(new FirefoxDriver());
 		}
-		
+
 		else {
 			logger.error("{} is Invalid Browser Name.... Please Select chrome or edge or firefox", browserName);
 		}
 	}
-	
+
 	public BrowserUtility(Browser browserName) {
 		logger.info("Launching the browser for {}", browserName);
-		if(browserName == Browser.CHROME) {
+		if (browserName == Browser.CHROME) {
 			driver.set(new ChromeDriver());
-		} 
-		
-		else if(browserName == Browser.EDGE) {
+		}
+
+		else if (browserName == Browser.EDGE) {
 			driver.set(new EdgeDriver());
 		}
-		
-		else if(browserName == Browser.FIREFOX) {
-			driver.set( new FirefoxDriver());
+
+		else if (browserName == Browser.FIREFOX) {
+			driver.set(new FirefoxDriver());
 		}
-		
+
 		else {
 			logger.error("{} is Invalid Browser Name.... Please Select chrome or edge or firefox", browserName);
 		}
 	}
-	
+
 	public BrowserUtility(Browser browserName, boolean isHeadless) {
 		logger.info("Launching the browser for {}", browserName);
 		if (browserName == Browser.CHROME) {
@@ -87,7 +86,7 @@ public abstract class BrowserUtility {
 			}
 
 		}
-		
+
 		else if (browserName == Browser.EDGE) {
 			if (isHeadless) {
 				EdgeOptions options = new EdgeOptions();
@@ -98,7 +97,7 @@ public abstract class BrowserUtility {
 				driver.set(new EdgeDriver());
 			}
 		}
-		
+
 		else if (browserName == Browser.FIREFOX) {
 			driver.set(new FirefoxDriver());
 			if (isHeadless) {
@@ -109,7 +108,7 @@ public abstract class BrowserUtility {
 				driver.set(new FirefoxDriver());
 			}
 		}
-		
+
 		else {
 			logger.error("{} is Invalid Browser Name.... Please Select chrome or edge or firefox", browserName);
 		}
@@ -138,21 +137,21 @@ public abstract class BrowserUtility {
 		logger.info("Locator found now enter the text {}", textToEnter);
 		element.sendKeys(textToEnter);
 	}
-	
+
 	public String getVisibleText(By locator) {
 		logger.info("Finding the locator {}", locator);
 		WebElement element = driver.get().findElement(locator);
 		logger.info("Locator found now get the visible text {}", element.getText());
 		return element.getText();
 	}
-	
+
 	public String takeScreenshot(String name) {
 		TakesScreenshot screenshot = (TakesScreenshot) driver.get();
 		Date date = new Date();
 		SimpleDateFormat dateFormater = new SimpleDateFormat("HH-mm-ss");
 		String timeStamp = dateFormater.format(date);
 		File screenshotData = screenshot.getScreenshotAs(OutputType.FILE);
-		String path = System.getProperty("user.dir") + "//screenshots//" + name+" - "+timeStamp+".png";
+		String path = System.getProperty("user.dir") + "//screenshots//" + name + " - " + timeStamp + ".png";
 		File screenshotFile = new File(path);
 
 		try {
@@ -162,6 +161,10 @@ public abstract class BrowserUtility {
 		}
 
 		return path;
+	}
+
+	public void quit() {
+		driver.get().quit();
 	}
 
 }
