@@ -2,6 +2,9 @@
 
 <suite name="Automation Practice Test Suite" parallel="methods" thread-count="4" verbose="1">
   <test name="UI Automation Test">
+  	<parameter name="browser" value="chrome"></parameter>
+  	<parameter name="isLambdaTest" value="true"></parameter>
+  	<parameter name="isHeadless" value="false"></parameter>
     <classes>
        <class name="com.ui.tests.LoginTest"/>
     </classes>

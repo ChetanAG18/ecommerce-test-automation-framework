@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
 
 import com.constants.Browser;
 import com.ui.pages.HomePage;
@@ -15,18 +17,21 @@ import com.utility.LoggerUtility;
 public class TestBase {
 	protected HomePage homePage;
 	Logger logger = LoggerUtility.getLogger(LoginTest.class);
-	boolean isLambdaTest = true;
-	boolean isHeadless = true;
+	boolean isLambdaTest;
 
+	@Parameters({ "browser", "isLambdaTest", "isHeadless" })
 	@BeforeMethod(description = "Load the homepage of the website")
-	public void setUp(ITestResult result) {
+	public void setUp(@Optional("chrome") String browser, @Optional("false") boolean isLambdaTest,
+			@Optional("true") boolean isHeadless, ITestResult result) {
+
 		WebDriver lambdaDriver;
+		this.isLambdaTest = isLambdaTest;
 		if (isLambdaTest) {
-			lambdaDriver = LambdaTestUtility.initializeLambdaTestSession("chrome", result.getMethod().getMethodName());
+			lambdaDriver = LambdaTestUtility.initializeLambdaTestSession(browser, result.getMethod().getMethodName());
 			homePage = new HomePage(lambdaDriver);
 		} else {
 			logger.info("Loading the home page of the website");
-			homePage = new HomePage(Browser.CHROME, isHeadless);
+			homePage = new HomePage(Browser.valueOf(browser.toUpperCase()), isHeadless);
 		}
 	}
 
@@ -34,7 +39,7 @@ public class TestBase {
 		return homePage;
 	}
 
-	@AfterMethod(description = "Tear Doen the browser")
+	@AfterMethod(description = "Tear Down the browser")
 	public void tearDown() {
 		if (isLambdaTest) {
 			LambdaTestUtility.quiteSession();
