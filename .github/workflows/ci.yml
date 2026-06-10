@@ -26,7 +26,7 @@ jobs:
         cache: maven
         
     - name: Execute automation tests with maven
-      run: mvn -X -DsuiteXmlFile=testng.xml -Dbrowser=chrome -DisLambdatest=true -DisHeadless=false
+      run: mvn test -X -DsuiteXmlFile=testng.xml -Dbrowser=chrome -DisLambdatest=true -DisHeadless=false
 
     - name: Upload a log Artifact
       if: always()
