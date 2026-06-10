@@ -25,8 +25,8 @@ jobs:
         distribution: 'temurin'
         cache: maven
         
-    - name: Execute automation tests with maven
-      run: mvn test -X -DsuiteXmlFile=testng.xml -Dbrowser=chrome -DisLambdatest=true -DisHeadless=false
+    - name: Running test automation framework with maven
+      run: mvn test -X -DsuiteXmlFile=testng.xml -Dbrowser=chrome -DisLambdaTest=true -DisHeadless=false
 
     - name: Upload a log Artifact
       if: always()
