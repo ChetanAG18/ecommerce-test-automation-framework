@@ -61,8 +61,8 @@ jobs:
       if: always()
       uses: JamesIves/github-pages-deploy-action@v4.8.0
       with:
-          folder: public/extent-reports
-          token: ${{ github.token }}
+          folder: public/extent-reports/
+          token: ${{ secrets.PAT }}
           clean: true
 
     - name: Notification for execution status
