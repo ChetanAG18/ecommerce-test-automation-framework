@@ -57,14 +57,21 @@ jobs:
         cp -R screenshots/ public/extent-reports/screenshots/
         ls -l
 
-    - name: Deploy to GitHub Pages
-      if: always()
-      uses: JamesIves/github-pages-deploy-action@v4.8.0
-      with:
-          folder: public/extent-reports/
-          token: ${{ secrets.PAT }}
-          clean: true
+    # - name: Deploy to GitHub Pages
+    #   if: always()
+    #   uses: JamesIves/github-pages-deploy-action@v4.8.0
+    #   with:
+    #       folder: public/extent-reports/
+    #       token: ${{ secrets.PAT }}
+    #       clean: true
 
+    - name: GitHub Pages action
+      if: always()
+      uses: peaceiris/actions-gh-pages@v4.1.0
+      with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: public/extent-reports/
+          
     - name: Notification for execution status
       if: always()
       run: echo "Test Execution Completed"
