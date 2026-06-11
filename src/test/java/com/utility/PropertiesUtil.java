@@ -11,7 +11,7 @@ import com.constants.Env;
 public class PropertiesUtil {
 
 	public static String getProperty(Env env, String propertName) {
-		File file = new File(System.getProperty("user.dir") + "/config/" + env + ".properties");
+		File file = new File(System.getProperty("user.dir") + "//config//" + env + ".properties");
 
 		FileReader fileReader = null;
 		Properties prop = new Properties();
